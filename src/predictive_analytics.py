@@ -260,7 +260,7 @@ class PredictiveAnalytics:
             prediction = self.anomaly_detector.predict(X_scaled)[0]
             anomaly_score = -self.anomaly_detector.score_samples(X_scaled)[0]
             
-            is_anomaly = (prediction == -1)
+            is_anomaly = bool(prediction == -1)
             
             # Identify affected metrics
             affected_metrics = []
