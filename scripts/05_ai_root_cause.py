@@ -1,30 +1,41 @@
 """
 05 - AI Root Cause Analysis
-Use GPT/Claude to analyze anomalies and provide recommendations
+Use local GPT/Claude models (Ollama) to analyze anomalies and provide recommendations
 """
 import pandas as pd
 import os
 from dotenv import load_dotenv
-from anthropic import Anthropic
-import openai
+import requests
 import json
 
 load_dotenv()
 
 
 class AIRootCauseAnalyzer:
-    """AI-powered root cause analysis"""
+    """AI-powered root cause analysis using local models"""
     
-    def __init__(self, provider='anthropic'):
+    def __init__(self, provider=None):
         self.data_dir = "data"
-        self.provider = provider
+        self.provider = provider or os.getenv('AI_PROVIDER', 'ollama')
         
-        if provider == 'anthropic':
+        if self.provider == 'ollama':
+            self.base_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
+            self.model = os.getenv('OLLAMA_MODEL', 'llama3.1:70b')
+            print(f"Using Ollama model: {self.model}")
+        elif self.provider == 'lmstudio':
+            self.base_url = os.getenv('LMSTUDIO_BASE_URL', 'http://localhost:1234/v1')
+            self.model = os.getenv('LMSTUDIO_MODEL', 'local-model')
+            print(f"Using LM Studio model: {self.model}")
+        elif self.provider == 'anthropic':
+            from anthropic import Anthropic
             self.client = Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
             self.model = "claude-3-5-sonnet-20241022"
+            print("Using Anthropic Claude API")
         else:
+            import openai
             openai.api_key = os.getenv('OPENAI_API_KEY')
             self.model = "gpt-4"
+            print("Using OpenAI GPT-4 API")
     
     def load_anomalies(self):
         """Load detected anomalies"""
@@ -87,9 +98,45 @@ Focus on AVD-specific issues like:
         return prompt
     
     def analyze_with_ai(self, prompt):
-        """Get AI analysis"""
+        """Get AI analysis from local or cloud models"""
         try:
-            if self.provider == 'anthropic':
+            if self.provider == 'ollama':
+                # Use Ollama local models
+                response = requests.post(
+                    f"{self.base_url}/api/generate",
+                    json={
+                        "model": self.model,
+                        "prompt": prompt,
+                        "stream": False,
+                        "options": {
+                            "temperature": 0.3,
+                            "num_predict": 2000
+                        }
+                    },
+                    timeout=120
+                )
+                response.raise_for_status()
+                return response.json()['response']
+            
+            elif self.provider == 'lmstudio':
+                # Use LM Studio OpenAI-compatible API
+                response = requests.post(
+                    f"{self.base_url}/chat/completions",
+                    json={
+                        "model": self.model,
+                        "messages": [
+                            {"role": "system", "content": "You are an AVD expert."},
+                            {"role": "user", "content": prompt}
+                        ],
+                        "temperature": 0.3,
+                        "max_tokens": 2000
+                    },
+                    timeout=120
+                )
+                response.raise_for_status()
+                return response.json()['choices'][0]['message']['content']
+            
+            elif self.provider == 'anthropic':
                 response = self.client.messages.create(
                     model=self.model,
                     max_tokens=2000,
@@ -97,7 +144,9 @@ Focus on AVD-specific issues like:
                     messages=[{"role": "user", "content": prompt}]
                 )
                 return response.content[0].text
+            
             else:
+                import openai
                 response = openai.chat.completions.create(
                     model=self.model,
                     messages=[
@@ -108,6 +157,11 @@ Focus on AVD-specific issues like:
                     max_tokens=2000
                 )
                 return response.choices[0].message.content
+        
+        except requests.exceptions.ConnectionError:
+            print(f"✗ Cannot connect to {self.provider} at {self.base_url}")
+            print(f"  Make sure {self.provider} is running locally")
+            return None
         except Exception as e:
             print(f"✗ AI analysis error: {e}")
             return None
@@ -127,6 +181,58 @@ Focus on AVD-specific issues like:
                 return {"error": "Could not parse JSON response"}
         except Exception as e:
             return {"error": f"Parse error: {str(e)}"}
+
+    def build_fallback_analysis(self, anomaly_row):
+        """Build deterministic fallback analysis when AI endpoint is unavailable."""
+        anomaly_score = float(anomaly_row.get('AnomalyScore', 0) or 0)
+        success_rate = anomaly_row.get('network_SuccessRate', anomaly_row.get('SuccessRate'))
+        utilization = anomaly_row.get('capacity_UtilizationPct', anomaly_row.get('UtilizationPct'))
+        disconnect_events = anomaly_row.get('hygiene_DisconnectEventCount')
+        fslogix_errors = anomaly_row.get('fslogix_ErrorCount')
+
+        root_cause = "Multi-signal anomaly across host metrics with likely transient load or connection instability."
+        severity = "Medium"
+        user_impact = "Intermittent user experience degradation is possible."
+
+        if pd.notna(utilization) and float(utilization) >= 90:
+            root_cause = "Host pool capacity pressure detected (high session utilization)."
+            severity = "High"
+            user_impact = "Users may face slow sessions, delayed logons, or connection throttling."
+        elif pd.notna(success_rate) and float(success_rate) < 0.95:
+            root_cause = "Connection success degradation detected on host/session path."
+            severity = "High"
+            user_impact = "More failed or retried user connection attempts are likely."
+        elif pd.notna(disconnect_events) and float(disconnect_events) > 20:
+            root_cause = "Elevated disconnection pattern detected from session/checkpoint signals."
+            severity = "Medium"
+            user_impact = "Users may experience abrupt disconnects and reconnect interruptions."
+        elif pd.notna(fslogix_errors) and float(fslogix_errors) > 0:
+            root_cause = "FSLogix-related profile errors detected in anomaly window."
+            severity = "Medium"
+            user_impact = "Profile load times and sign-in experience may degrade for affected users."
+
+        if anomaly_score >= 0.75:
+            severity = "Critical" if severity == "High" else "High"
+
+        return {
+            "root_cause": root_cause,
+            "severity": severity,
+            "user_impact": user_impact,
+            "technical_details": "Fallback rules-based analysis generated from anomaly metrics due unavailable AI endpoint.",
+            "recommended_actions": [
+                "Validate host pool session distribution and drain overloaded hosts.",
+                "Review recent gateway/session connection failures and retry trends.",
+                "Check FSLogix/profile and disconnection events in corresponding timeframe."
+            ],
+            "prevention_measures": [
+                "Set host-level alert thresholds for utilization, success rate, and disconnect counts.",
+                "Maintain proactive capacity headroom and scheduled health checks."
+            ],
+            "monitoring_recommendations": [
+                "Track per-host success rate and disconnect spikes hourly.",
+                "Track FSLogix error count and remediation completion status."
+            ]
+        }
     
     def analyze_top_anomalies(self, df, top_n=5):
         """Analyze top N anomalies"""
@@ -151,14 +257,20 @@ Focus on AVD-specific issues like:
             
             if response:
                 analysis = self.parse_analysis(response)
-                analysis['timestamp'] = str(idx)
-                analysis['anomaly_score'] = row.get('AnomalyScore', 0)
-                analyses.append(analysis)
-                
-                # Display summary
-                print(f"  ✓ Severity: {analysis.get('severity', 'Unknown')}")
-                print(f"  ✓ Root Cause: {analysis.get('root_cause', 'Unknown')[:80]}...")
-                print()
+            else:
+                analysis = self.build_fallback_analysis(row)
+                analysis['analysis_mode'] = 'fallback'
+
+            analysis['timestamp'] = str(idx)
+            analysis['anomaly_score'] = row.get('AnomalyScore', 0)
+            analyses.append(analysis)
+            
+            # Display summary
+            print(f"  ✓ Severity: {analysis.get('severity', 'Unknown')}")
+            print(f"  ✓ Root Cause: {analysis.get('root_cause', 'Unknown')[:80]}...")
+            if analysis.get('analysis_mode') == 'fallback':
+                print("  ✓ Mode: Fallback (rules-based)")
+            print()
         
         return analyses
     
@@ -217,5 +329,6 @@ Focus on AVD-specific issues like:
 
 
 if __name__ == "__main__":
-    analyzer = AIRootCauseAnalyzer(provider='anthropic')
+    # Use provider from .env file (defaults to 'ollama' for local models)
+    analyzer = AIRootCauseAnalyzer()
     analyzer.run()

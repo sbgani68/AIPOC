@@ -37,3 +37,6 @@ node_modules/
 
 # Azure
 .azure/
+
+# Large generated datasets
+data/client_logs.csv

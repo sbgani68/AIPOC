@@ -1,0 +1,112 @@
+[
+  {
+    "root_cause": "Connection success degradation detected on host/session path.",
+    "severity": "High",
+    "user_impact": "More failed or retried user connection attempts are likely.",
+    "technical_details": "Fallback rules-based analysis generated from anomaly metrics due unavailable AI endpoint.",
+    "recommended_actions": [
+      "Validate host pool session distribution and drain overloaded hosts.",
+      "Review recent gateway/session connection failures and retry trends.",
+      "Check FSLogix/profile and disconnection events in corresponding timeframe."
+    ],
+    "prevention_measures": [
+      "Set host-level alert thresholds for utilization, success rate, and disconnect counts.",
+      "Maintain proactive capacity headroom and scheduled health checks."
+    ],
+    "monitoring_recommendations": [
+      "Track per-host success rate and disconnect spikes hourly.",
+      "Track FSLogix error count and remediation completion status."
+    ],
+    "analysis_mode": "fallback",
+    "timestamp": "2026-02-11 13:00:00+00:00",
+    "anomaly_score": 0.5790175839960854
+  },
+  {
+    "root_cause": "Connection success degradation detected on host/session path.",
+    "severity": "High",
+    "user_impact": "More failed or retried user connection attempts are likely.",
+    "technical_details": "Fallback rules-based analysis generated from anomaly metrics due unavailable AI endpoint.",
+    "recommended_actions": [
+      "Validate host pool session distribution and drain overloaded hosts.",
+      "Review recent gateway/session connection failures and retry trends.",
+      "Check FSLogix/profile and disconnection events in corresponding timeframe."
+    ],
+    "prevention_measures": [
+      "Set host-level alert thresholds for utilization, success rate, and disconnect counts.",
+      "Maintain proactive capacity headroom and scheduled health checks."
+    ],
+    "monitoring_recommendations": [
+      "Track per-host success rate and disconnect spikes hourly.",
+      "Track FSLogix error count and remediation completion status."
+    ],
+    "analysis_mode": "fallback",
+    "timestamp": "2026-02-11 12:00:00+00:00",
+    "anomaly_score": 0.5786259611208461
+  },
+  {
+    "root_cause": "Connection success degradation detected on host/session path.",
+    "severity": "High",
+    "user_impact": "More failed or retried user connection attempts are likely.",
+    "technical_details": "Fallback rules-based analysis generated from anomaly metrics due unavailable AI endpoint.",
+    "recommended_actions": [
+      "Validate host pool session distribution and drain overloaded hosts.",
+      "Review recent gateway/session connection failures and retry trends.",
+      "Check FSLogix/profile and disconnection events in corresponding timeframe."
+    ],
+    "prevention_measures": [
+      "Set host-level alert thresholds for utilization, success rate, and disconnect counts.",
+      "Maintain proactive capacity headroom and scheduled health checks."
+    ],
+    "monitoring_recommendations": [
+      "Track per-host success rate and disconnect spikes hourly.",
+      "Track FSLogix error count and remediation completion status."
+    ],
+    "analysis_mode": "fallback",
+    "timestamp": "2026-01-22 12:00:00+00:00",
+    "anomaly_score": 0.5765215568165486
+  },
+  {
+    "root_cause": "Connection success degradation detected on host/session path.",
+    "severity": "High",
+    "user_impact": "More failed or retried user connection attempts are likely.",
+    "technical_details": "Fallback rules-based analysis generated from anomaly metrics due unavailable AI endpoint.",
+    "recommended_actions": [
+      "Validate host pool session distribution and drain overloaded hosts.",
+      "Review recent gateway/session connection failures and retry trends.",
+      "Check FSLogix/profile and disconnection events in corresponding timeframe."
+    ],
+    "prevention_measures": [
+      "Set host-level alert thresholds for utilization, success rate, and disconnect counts.",
+      "Maintain proactive capacity headroom and scheduled health checks."
+    ],
+    "monitoring_recommendations": [
+      "Track per-host success rate and disconnect spikes hourly.",
+      "Track FSLogix error count and remediation completion status."
+    ],
+    "analysis_mode": "fallback",
+    "timestamp": "2026-02-01 06:00:00+00:00",
+    "anomaly_score": 0.5618819468714962
+  },
+  {
+    "root_cause": "Connection success degradation detected on host/session path.",
+    "severity": "High",
+    "user_impact": "More failed or retried user connection attempts are likely.",
+    "technical_details": "Fallback rules-based analysis generated from anomaly metrics due unavailable AI endpoint.",
+    "recommended_actions": [
+      "Validate host pool session distribution and drain overloaded hosts.",
+      "Review recent gateway/session connection failures and retry trends.",
+      "Check FSLogix/profile and disconnection events in corresponding timeframe."
+    ],
+    "prevention_measures": [
+      "Set host-level alert thresholds for utilization, success rate, and disconnect counts.",
+      "Maintain proactive capacity headroom and scheduled health checks."
+    ],
+    "monitoring_recommendations": [
+      "Track per-host success rate and disconnect spikes hourly.",
+      "Track FSLogix error count and remediation completion status."
+    ],
+    "analysis_mode": "fallback",
+    "timestamp": "2026-02-01 08:00:00+00:00",
+    "anomaly_score": 0.5618384194890963
+  }
+]

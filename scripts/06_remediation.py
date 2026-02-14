@@ -5,6 +5,7 @@ Generate and execute remediation scripts based on AI recommendations
 import json
 import os
 from datetime import datetime
+import pandas as pd
 
 
 class AutomatedRemediation:
@@ -19,13 +20,72 @@ class AutomatedRemediation:
         """Load AI root cause analyses"""
         path = os.path.join(self.data_dir, "ai_root_cause_analyses.json")
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 analyses = json.load(f)
             print(f"✓ Loaded {len(analyses)} AI analyses")
             return analyses
         else:
             print("✗ No AI analyses found. Run 05_ai_root_cause.py first.")
             return []
+
+    def load_hosts_with_issues(self):
+        """Load hosts/issues dataset from detection stage"""
+        path = os.path.join(self.data_dir, "hosts_with_issues.csv")
+        if os.path.exists(path):
+            df = pd.read_csv(path)
+            print(f"✓ Loaded {len(df)} hosts-with-issues rows")
+            return df
+        print("✗ No hosts_with_issues.csv found. Run 03_detection.py first.")
+        return pd.DataFrame()
+
+    def _is_true(self, value):
+        """Normalize mixed bool/string/int truthy values"""
+        if isinstance(value, bool):
+            return value
+        if value is None:
+            return False
+        if isinstance(value, (int, float)):
+            return value != 0
+        return str(value).strip().lower() in {"true", "1", "yes", "y"}
+
+    def drain_host(self, host):
+        print(f"[ACTION] Draining host {host}...")
+
+    def cleanup_disk(self, host_path):
+        print(f"[ACTION] Cleaning temp/profile cache on {host_path}...")
+
+    def prevent_login(self, host):
+        print(f"[ACTION] Preventing login to {host} until remediated")
+
+    def restart_agent_health_probe_undrain(self, host):
+        print(f"[ACTION] Restart RDAgentBootLoader, health probe, undrain {host}")
+
+    def run_issue_based_remediation(self, hosts_with_issues):
+        """Step 6 example: apply automated actions for disk/session-host issues"""
+        if hosts_with_issues.empty:
+            print("ℹ No hosts_with_issues data available for action execution.")
+            return
+
+        print("\nApplying issue-based automated remediation actions...\n")
+
+        handled = 0
+        for _, row in hosts_with_issues.iterrows():
+            host = row.get('Computer') or row.get('SessionHostName') or "UnknownHost"
+            disk_issue = self._is_true(row.get('disk_issue', False))
+            session_host_issue = self._is_true(row.get('session_host_issue', False))
+
+            if disk_issue:
+                self.drain_host(host)
+                self.cleanup_disk(f"\\\\{host}\\C$")
+                self.prevent_login(host)
+                handled += 1
+
+            if session_host_issue:
+                self.drain_host(host)
+                self.restart_agent_health_probe_undrain(host)
+                handled += 1
+
+        print(f"\n✓ Issue-based actions applied for {handled} host-issue event(s)")
     
     def generate_capacity_remediation(self, analysis):
         """Generate capacity scaling script"""
@@ -214,7 +274,7 @@ Write-Host "✓ Performance optimization complete" -ForegroundColor Green
                 self.remediation_dir,
                 f"remediation_{i}_{remediation_type}.ps1"
             )
-            with open(script_path, 'w') as f:
+            with open(script_path, 'w', encoding='utf-8') as f:
                 f.write(script)
             
             # Generate alert
@@ -235,14 +295,14 @@ Write-Host "✓ Performance optimization complete" -ForegroundColor Green
     def save_remediation_plan(self, plan):
         """Save remediation plan"""
         plan_path = os.path.join(self.remediation_dir, "remediation_plan.json")
-        with open(plan_path, 'w') as f:
+        with open(plan_path, 'w', encoding='utf-8') as f:
             json.dump(plan, f, indent=2)
         
         print(f"\n✓ Remediation plan saved: {plan_path}")
         
         # Create summary
         summary_path = os.path.join(self.remediation_dir, "REMEDIATION_README.txt")
-        with open(summary_path, 'w') as f:
+        with open(summary_path, 'w', encoding='utf-8') as f:
             f.write("AVD AUTOMATED REMEDIATION PLAN\n")
             f.write("=" * 70 + "\n\n")
             f.write(f"Generated: {plan['generated_at']}\n")
@@ -275,6 +335,10 @@ Write-Host "✓ Performance optimization complete" -ForegroundColor Green
         
         # Save plan
         self.save_remediation_plan(plan)
+
+        # Step 6 automated remediation example (disk pressure / session host)
+        hosts_with_issues = self.load_hosts_with_issues()
+        self.run_issue_based_remediation(hosts_with_issues)
         
         print(f"\n✓ Generated {len(plan['remediations'])} remediation scripts!")
         print(f"✓ Location: {self.remediation_dir}")

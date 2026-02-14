@@ -1,0 +1,106 @@
+{
+  "generated_at": "2026-02-14T22:40:43.845249",
+  "total_issues": 5,
+  "remediations": [
+    {
+      "issue_number": 1,
+      "severity": "High",
+      "type": "capacity",
+      "script_path": "data\\remediation\\remediation_1_capacity.ps1",
+      "alert_rule": {
+        "name": "AVD-High-Alert",
+        "description": "Connection success degradation detected on host/session path.",
+        "severity": "High",
+        "recommended_actions": [
+          "Validate host pool session distribution and drain overloaded hosts.",
+          "Review recent gateway/session connection failures and retry trends.",
+          "Check FSLogix/profile and disconnection events in corresponding timeframe."
+        ],
+        "monitoring": [
+          "Track per-host success rate and disconnect spikes hourly.",
+          "Track FSLogix error count and remediation completion status."
+        ]
+      }
+    },
+    {
+      "issue_number": 2,
+      "severity": "High",
+      "type": "capacity",
+      "script_path": "data\\remediation\\remediation_2_capacity.ps1",
+      "alert_rule": {
+        "name": "AVD-High-Alert",
+        "description": "Connection success degradation detected on host/session path.",
+        "severity": "High",
+        "recommended_actions": [
+          "Validate host pool session distribution and drain overloaded hosts.",
+          "Review recent gateway/session connection failures and retry trends.",
+          "Check FSLogix/profile and disconnection events in corresponding timeframe."
+        ],
+        "monitoring": [
+          "Track per-host success rate and disconnect spikes hourly.",
+          "Track FSLogix error count and remediation completion status."
+        ]
+      }
+    },
+    {
+      "issue_number": 3,
+      "severity": "High",
+      "type": "capacity",
+      "script_path": "data\\remediation\\remediation_3_capacity.ps1",
+      "alert_rule": {
+        "name": "AVD-High-Alert",
+        "description": "Connection success degradation detected on host/session path.",
+        "severity": "High",
+        "recommended_actions": [
+          "Validate host pool session distribution and drain overloaded hosts.",
+          "Review recent gateway/session connection failures and retry trends.",
+          "Check FSLogix/profile and disconnection events in corresponding timeframe."
+        ],
+        "monitoring": [
+          "Track per-host success rate and disconnect spikes hourly.",
+          "Track FSLogix error count and remediation completion status."
+        ]
+      }
+    },
+    {
+      "issue_number": 4,
+      "severity": "High",
+      "type": "capacity",
+      "script_path": "data\\remediation\\remediation_4_capacity.ps1",
+      "alert_rule": {
+        "name": "AVD-High-Alert",
+        "description": "Connection success degradation detected on host/session path.",
+        "severity": "High",
+        "recommended_actions": [
+          "Validate host pool session distribution and drain overloaded hosts.",
+          "Review recent gateway/session connection failures and retry trends.",
+          "Check FSLogix/profile and disconnection events in corresponding timeframe."
+        ],
+        "monitoring": [
+          "Track per-host success rate and disconnect spikes hourly.",
+          "Track FSLogix error count and remediation completion status."
+        ]
+      }
+    },
+    {
+      "issue_number": 5,
+      "severity": "High",
+      "type": "capacity",
+      "script_path": "data\\remediation\\remediation_5_capacity.ps1",
+      "alert_rule": {
+        "name": "AVD-High-Alert",
+        "description": "Connection success degradation detected on host/session path.",
+        "severity": "High",
+        "recommended_actions": [
+          "Validate host pool session distribution and drain overloaded hosts.",
+          "Review recent gateway/session connection failures and retry trends.",
+          "Check FSLogix/profile and disconnection events in corresponding timeframe."
+        ],
+        "monitoring": [
+          "Track per-host success rate and disconnect spikes hourly.",
+          "Track FSLogix error count and remediation completion status."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+AVD ANOMALY ROOT CAUSE ANALYSIS REPORT
+======================================================================
+
+ANOMALY #1
+Timestamp: 2026-02-11 13:00:00+00:00
+Severity: High
+Anomaly Score: 0.579
+
+ROOT CAUSE:
+Connection success degradation detected on host/session path.
+
+USER IMPACT:
+More failed or retried user connection attempts are likely.
+
+RECOMMENDED ACTIONS:
+  • Validate host pool session distribution and drain overloaded hosts.
+  • Review recent gateway/session connection failures and retry trends.
+  • Check FSLogix/profile and disconnection events in corresponding timeframe.
+
+PREVENTION MEASURES:
+  • Set host-level alert thresholds for utilization, success rate, and disconnect counts.
+  • Maintain proactive capacity headroom and scheduled health checks.
+
+----------------------------------------------------------------------
+
+ANOMALY #2
+Timestamp: 2026-02-11 12:00:00+00:00
+Severity: High
+Anomaly Score: 0.579
+
+ROOT CAUSE:
+Connection success degradation detected on host/session path.
+
+USER IMPACT:
+More failed or retried user connection attempts are likely.
+
+RECOMMENDED ACTIONS:
+  • Validate host pool session distribution and drain overloaded hosts.
+  • Review recent gateway/session connection failures and retry trends.
+  • Check FSLogix/profile and disconnection events in corresponding timeframe.
+
+PREVENTION MEASURES:
+  • Set host-level alert thresholds for utilization, success rate, and disconnect counts.
+  • Maintain proactive capacity headroom and scheduled health checks.
+
+----------------------------------------------------------------------
+
+ANOMALY #3
+Timestamp: 2026-01-22 12:00:00+00:00
+Severity: High
+Anomaly Score: 0.577
+
+ROOT CAUSE:
+Connection success degradation detected on host/session path.
+
+USER IMPACT:
+More failed or retried user connection attempts are likely.
+
+RECOMMENDED ACTIONS:
+  • Validate host pool session distribution and drain overloaded hosts.
+  • Review recent gateway/session connection failures and retry trends.
+  • Check FSLogix/profile and disconnection events in corresponding timeframe.
+
+PREVENTION MEASURES:
+  • Set host-level alert thresholds for utilization, success rate, and disconnect counts.
+  • Maintain proactive capacity headroom and scheduled health checks.
+
+----------------------------------------------------------------------
+
+ANOMALY #4
+Timestamp: 2026-02-01 06:00:00+00:00
+Severity: High
+Anomaly Score: 0.562
+
+ROOT CAUSE:
+Connection success degradation detected on host/session path.
+
+USER IMPACT:
+More failed or retried user connection attempts are likely.
+
+RECOMMENDED ACTIONS:
+  • Validate host pool session distribution and drain overloaded hosts.
+  • Review recent gateway/session connection failures and retry trends.
+  • Check FSLogix/profile and disconnection events in corresponding timeframe.
+
+PREVENTION MEASURES:
+  • Set host-level alert thresholds for utilization, success rate, and disconnect counts.
+  • Maintain proactive capacity headroom and scheduled health checks.
+
+----------------------------------------------------------------------
+
+ANOMALY #5
+Timestamp: 2026-02-01 08:00:00+00:00
+Severity: High
+Anomaly Score: 0.562
+
+ROOT CAUSE:
+Connection success degradation detected on host/session path.
+
+USER IMPACT:
+More failed or retried user connection attempts are likely.
+
+RECOMMENDED ACTIONS:
+  • Validate host pool session distribution and drain overloaded hosts.
+  • Review recent gateway/session connection failures and retry trends.
+  • Check FSLogix/profile and disconnection events in corresponding timeframe.
+
+PREVENTION MEASURES:
+  • Set host-level alert thresholds for utilization, success rate, and disconnect counts.
+  • Maintain proactive capacity headroom and scheduled health checks.
+
+----------------------------------------------------------------------
+

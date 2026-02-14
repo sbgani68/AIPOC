@@ -1,0 +1,152 @@
+AI HOST EXPLANATIONS REPORT
+================================================================================
+
+Generated: 2026-02-14T22:44:20.741247
+Total Hosts Explained: 20
+
+1. Host: Client
+   Time: 2026-01-27 09:00:00+00:00
+   Severity: Medium
+   Root Cause: FSLogix profile failures/errors detected.
+   Actions:
+     - Run FSLogix maintenance and ask users to sign out.
+     - Log off long disconnected sessions and notify users.
+
+2. Host: Client
+   Time: 2026-01-29 14:00:00+00:00
+   Severity: Medium
+   Root Cause: FSLogix profile failures/errors detected.
+   Actions:
+     - Run FSLogix maintenance and ask users to sign out.
+     - Log off long disconnected sessions and notify users.
+
+3. Host: Client
+   Time: 2026-02-11 14:00:00+00:00
+   Severity: Medium
+   Root Cause: FSLogix profile failures/errors detected.
+   Actions:
+     - Run FSLogix maintenance and ask users to sign out.
+     - Log off long disconnected sessions and notify users.
+
+4. Host: Client
+   Time: 2026-02-09 12:00:00+00:00
+   Severity: Medium
+   Root Cause: FSLogix profile failures/errors detected.
+   Actions:
+     - Run FSLogix maintenance and ask users to sign out.
+     - Log off long disconnected sessions and notify users.
+
+5. Host: Client
+   Time: 2026-02-02 13:00:00+00:00
+   Severity: Medium
+   Root Cause: FSLogix profile failures/errors detected.
+   Actions:
+     - Run FSLogix maintenance and ask users to sign out.
+     - Log off long disconnected sessions and notify users.
+
+6. Host: Client
+   Time: 2026-01-30 13:00:00+00:00
+   Severity: Medium
+   Root Cause: FSLogix profile failures/errors detected.
+   Actions:
+     - Run FSLogix maintenance and ask users to sign out.
+     - Log off long disconnected sessions and notify users.
+
+7. Host: Client
+   Time: 2026-01-20 12:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+8. Host: Client
+   Time: 2026-01-20 11:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+9. Host: Client
+   Time: 2026-01-19 13:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+10. Host: Client
+   Time: 2026-02-03 13:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+11. Host: Client
+   Time: 2026-01-29 15:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+12. Host: Client
+   Time: 2026-02-09 11:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+13. Host: Client
+   Time: 2026-02-11 11:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+14. Host: Client
+   Time: 2026-01-19 08:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+15. Host: Client
+   Time: 2026-02-12 12:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+16. Host: Client
+   Time: 2026-01-28 11:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+17. Host: Client
+   Time: 2026-02-03 12:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+
+18. Host: Client
+   Time: 2026-01-19 10:00:00+00:00
+   Severity: Medium
+   Root Cause: FSLogix profile failures/errors detected.
+   Actions:
+     - Run FSLogix maintenance and ask users to sign out.
+
+19. Host: Client
+   Time: 2026-02-13 10:00:00+00:00
+   Severity: Medium
+   Root Cause: FSLogix profile failures/errors detected.
+   Actions:
+     - Run FSLogix maintenance and ask users to sign out.
+
+20. Host: Client
+   Time: 2026-02-11 09:00:00+00:00
+   Severity: Low
+   Root Cause: Session hygiene issue (long disconnected sessions).
+   Actions:
+     - Log off long disconnected sessions and notify users.
+

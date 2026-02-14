@@ -30,6 +30,7 @@ avd_ai_poc/
 │  ├─ 03_detection.py            # Anomaly detection
 │  ├─ 04_predictive_analysis.py  # ML forecasting
 │  ├─ 05_ai_root_cause.py        # AI analysis
+│  ├─ 05b_suggested_actions.py   # Action mapping
 │  ├─ 06_remediation.py          # Auto-remediation
 │  └─ 07_dashboard.py            # Streamlit dashboard
 ├─ requirements.txt               # Python dependencies
@@ -83,23 +84,62 @@ python scripts/04_predictive_analysis.py
 # Step 5: AI root cause analysis
 python scripts/05_ai_root_cause.py
 
+# Step 5b: Map suggested actions
+python scripts/05b_suggested_actions.py
+
 # Step 6: Generate remediation scripts
 python scripts/06_remediation.py
 
-# Step 7: Launch dashboard
+# Step 7b: AI host explanations (Local LLM)
+python scripts/07b_ai_explanations.py
+
+# Step 8: Launch dashboard
 streamlit run scripts/07_dashboard.py
 ```
 
 ## 📊 Features
 
 ### 1. Data Collection (Script 01)
-- Network connectivity logs
-- Session host performance metrics
-- Capacity and utilization data
-- FSLogix profile events
-- Disk performance
-- Windows update status
-- Client connection diagnostics
+Collects **30 days** of comprehensive AVD logs:
+
+**Network / UX:**
+- RTT (round-trip time) per session
+- Jitter and packet loss
+- TCP fallback events
+- Regional gateway mismatches
+
+**Session Host:**
+- RDAgent heartbeat gaps
+- Event IDs 1001/1002/1003 (agent/service issues)
+- CPU, memory, disk performance
+
+**Capacity:**
+- Users queued for login
+- Logon failures and success rates
+- Logon spike timestamps
+- Session host utilization
+
+**FSLogix:**
+- Event IDs 26/27/28/1012/1013
+- Profile IO latency
+- VHD attach errors
+- Profile loading failures
+
+**Disk Pressure:**
+- Disk % free (C: drive)
+- Temp folder size metrics
+- Profile cache pressure
+- Disk queue length
+
+**Hygiene:**
+- Disconnected session duration
+- Number of disconnected sessions per host
+- Windows update compliance
+
+**Client Posture:**
+- Client version distribution
+- Teams optimization status
+- Connection type (UDP/TCP)
 
 ### 2. Data Processing (Script 02)
 - Time-series aggregation
@@ -126,6 +166,19 @@ streamlit run scripts/07_dashboard.py
 - Actionable recommendations
 - Prevention measures
 
+### 5b. Suggested Actions Mapping (Script 05b)
+- Categorizes issues into 7 categories:
+  - Network/UX → Teams alerts, RFC for routing issues
+  - Session Host → Drain, restart agent, health probe, undrain
+  - Capacity → Scaling recommendations (requires approval)
+  - FSLogix → Profile maintenance, user notifications
+  - Disk Pressure → Drain, cleanup, prevent logins
+  - Hygiene → Log off idle sessions, user notifications
+  - Client Posture → Client update/optimization guidance
+- Maps each issue to specific actionable steps
+- Identifies auto-remediation vs. approval-required actions
+- Generates comprehensive action plan report
+
 ### 6. Automated Remediation (Script 06)
 - PowerShell remediation scripts
 - Capacity scaling automation
@@ -133,11 +186,20 @@ streamlit run scripts/07_dashboard.py
 - FSLogix profile repairs
 - Performance optimization
 
-### 7. Interactive Dashboard (Script 07)
+### 7b. AI Explanations (Script 07b)
+- Host-level AI explanations for detected issue rows
+- Prompt includes issue flags + key host metrics (RTT, fallback, disk, queue)
+- Local LLM support (Ollama/LM Studio) plus Claude/GPT providers
+- JSON/text outputs for IT operations review
+
+### 8. Interactive Dashboard (Script 07)
 - Real-time metrics visualization
 - Anomaly timeline
 - AI analysis display
 - Capacity heatmaps
+- Host view: `Host | Detected Issues | Predictive Risk | Suggested Actions`
+- Operational graphs: Disk %, RTT, Queue, FSLogix errors
+- Alerts/notifications for high-impact hosts via Teams or Outlook template/workflow
 - Filterable date ranges
 
 ## 🔧 Configuration
