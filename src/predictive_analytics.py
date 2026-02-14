@@ -98,8 +98,8 @@ class PredictiveAnalytics:
                 df[f'{col}_lag1'] = df[col].shift(1).fillna(df[col].mean())
                 df[f'{col}_lag2'] = df[col].shift(2).fillna(df[col].mean())
         
-        # Fill any remaining NaN values
-        df = df.fillna(method='bfill').fillna(method='ffill').fillna(0)
+        # Fill any remaining NaN values (pandas 3.0+ compatible)
+        df = df.bfill().ffill().fillna(0)
         
         return df
     
